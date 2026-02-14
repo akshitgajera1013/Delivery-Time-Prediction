@@ -65,7 +65,10 @@ The app will open automatically in your browser.
 
 ## 📦 requirements.txt
 streamlit
+
 pandas
+
 numpy
+
 scikit-learn
 
