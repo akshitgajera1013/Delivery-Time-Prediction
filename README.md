@@ -59,6 +59,7 @@ pip install -r requirements.txt
 
 
 4️⃣ Run the Streamlit app:
+python -m streamlit run app.py
 
 The app will open automatically in your browser.
 
@@ -67,8 +68,4 @@ streamlit
 pandas
 numpy
 scikit-learn
-
-
-
-
 
