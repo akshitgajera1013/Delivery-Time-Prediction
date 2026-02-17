@@ -1,11 +1,14 @@
 # ============================================================
-# 🚚 Delivery Time Intelligence System
+# 🚚 Delivery Time Intelligence System (Enterprise Edition)
 # Developed by Akshit Gajera
 # ============================================================
 
 import streamlit as st
 import pandas as pd
 import pickle
+import plotly.express as px
+import plotly.graph_objects as go
+import numpy as np
 
 # ------------------------------------------------------------
 # PAGE CONFIG
@@ -13,11 +16,12 @@ import pickle
 st.set_page_config(
     page_title="Delivery Time Intelligence",
     page_icon="🚚",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # ------------------------------------------------------------
-# LOAD MODEL & DUMMY COLUMNS
+# LOAD MODEL
 # ------------------------------------------------------------
 @st.cache_resource
 def load_files():
@@ -30,7 +34,7 @@ def load_files():
 model, dummy_columns = load_files()
 
 # ------------------------------------------------------------
-# PREMIUM DARK DASHBOARD CSS
+# DARK ENTERPRISE THEME
 # ------------------------------------------------------------
 st.markdown("""
 <style>
@@ -38,46 +42,33 @@ st.markdown("""
     background: linear-gradient(135deg, #0f172a, #1e293b);
     font-family: 'Segoe UI', sans-serif;
 }
-
-.main-container {
-    background: #111827;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    margin-top: 30px;
+.main-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
 }
-
-.header-strip {
-    background: linear-gradient(90deg,#2563eb,#06b6d4);
-    padding: 20px 30px;
-    border-radius: 18px;
-    color: white;
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 30px;
+.sub-header {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 2rem;
 }
-
 .card {
     background: #1f2937;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
     margin-bottom: 25px;
 }
-
 .kpi-value {
-    font-size: 65px;
+    font-size: 60px;
     font-weight: 800;
     text-align: center;
     color: #22d3ee;
 }
-
 .kpi-label {
     text-align: center;
-    font-size: 20px;
+    font-size: 18px;
     color: #cbd5e1;
 }
-
 .stButton>button {
     width: 100%;
     height: 55px;
@@ -88,93 +79,172 @@ st.markdown("""
     border: none;
     color: black;
 }
-
-.footer {
-    text-align: center;
-    color: #64748b;
-    margin-top: 40px;
-}
 </style>
 """, unsafe_allow_html=True)
 
 # ------------------------------------------------------------
-# MAIN CONTAINER
+# SIDEBAR
 # ------------------------------------------------------------
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
-st.markdown('<div class="header-strip">Machine Learning-Based Delivery Time Prediction System</div>', unsafe_allow_html=True)
+with st.sidebar:
+    st.markdown("## 🚚 Project Overview")
+    st.info("""
+    Machine Learning-Based Delivery Time Prediction
+    
+    Algorithm: Linear Regression  
+    Encoding: One-Hot Encoding  
+    Features: 7
+    """)
 
-left, right = st.columns([1,1.2])
-
-# ------------------------------------------------------------
-# LEFT PANEL – INPUT SECTION
-# ------------------------------------------------------------
-with left:
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("📦 Delivery Order Details")
-
-    distance = st.number_input("Distance (km)", min_value=0.0, value=5.0)
-
-    weather = st.selectbox("Weather", ["Sunny", "Rainy", "Foggy", "Stormy"])
-    traffic = st.selectbox("Traffic Level", ["Low", "Medium", "High"])
-    time_of_day = st.selectbox("Time of Day", ["Morning", "Afternoon", "Evening", "Night"])
-    vehicle = st.selectbox("Vehicle Type", ["Bike", "Scooter", "Car"])
-
-    prep_time = st.number_input("Preparation Time (minutes)", min_value=0, value=15)
-    experience = st.number_input("Courier Experience (years)", min_value=0, value=2)
-
-    predict = st.button("🚀 Predict Delivery Time")
-
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("---")
+    st.markdown("## 📊 Model Info")
+    st.metric("Model Type", "Linear Regression")
+    st.metric("Encoding", "One-Hot")
+    st.metric("Deployment", "Streamlit")
 
 # ------------------------------------------------------------
-# RIGHT PANEL – ANALYTICS & OUTPUT
+# HEADER
 # ------------------------------------------------------------
-with right:
+st.markdown('<div class="main-header">🚚 Delivery Time Intelligence Platform</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-header">AI-Powered Logistics Optimization System</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("📊 Model Overview")
+# ------------------------------------------------------------
+# TABS STRUCTURE
+# ------------------------------------------------------------
+tab1, tab2, tab3 = st.tabs([
+    "Prediction",
+    "Analytics",
+    "Model Insights"
+])
 
+# ============================================================
+# TAB 1 - PREDICTION (ONLY IMPROVED LAYOUT)
+# ============================================================
+with tab1:
+
+    st.markdown("### 📦 Order Details")
+
+    # Compact grid layout
     col1, col2, col3 = st.columns(3)
-    col1.metric("Algorithm", "Linear Regression")
-    col2.metric("Features", "7")
-    col3.metric("Encoding", "One-Hot")
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    with col1:
+        distance = st.number_input("Distance (km)", 0.0, 100.0, 5.0)
+        weather = st.selectbox("Weather", ["Sunny", "Rainy", "Foggy", "Stormy"])
 
-    st.markdown('<div class="card">', unsafe_allow_html=True)
-    st.subheader("⏱ Prediction Output")
-    output_placeholder = st.empty()
-    st.markdown('</div>', unsafe_allow_html=True)
+    with col2:
+        traffic = st.selectbox("Traffic Level", ["Low", "Medium", "High"])
+        time_of_day = st.selectbox("Time of Day", ["Morning", "Afternoon", "Evening", "Night"])
 
-# ------------------------------------------------------------
-# PREDICTION LOGIC
-# ------------------------------------------------------------
-if predict:
-    input_data = pd.DataFrame({
-        "Distance_km": [distance],
-        "Weather": [weather],
-        "Traffic_Level": [traffic],
-        "Time_of_Day": [time_of_day],
-        "Vehicle_Type": [vehicle],
-        "Preparation_Time_min": [prep_time],
-        "Courier_Experience_yrs": [experience]
-    })
+    with col3:
+        vehicle = st.selectbox("Vehicle Type", ["Bike", "Scooter", "Car"])
+        prep_time = st.number_input("Preparation Time (minutes)", 0, 120, 15)
 
-    input_data = pd.get_dummies(input_data)
-    input_data = input_data.reindex(columns=dummy_columns, fill_value=0)
+    experience = st.number_input("Courier Experience (years)", 0, 20, 2)
 
-    prediction = model.predict(input_data)
-    predicted_time = round(prediction[0], 2)
+    st.markdown("---")
 
-    output_placeholder.markdown(
-        f'<div class="kpi-value">{predicted_time}</div>'
-        f'<div class="kpi-label">Estimated Delivery Time (Minutes)</div>',
-        unsafe_allow_html=True
-    )
+    predict = st.button("🚀 Run Prediction")
 
-st.markdown('</div>', unsafe_allow_html=True)
+    # RESULT SHOWN BELOW (NOT RIGHT SIDE)
+    if predict:
+
+        input_data = pd.DataFrame({
+            "Distance_km": [distance],
+            "Weather": [weather],
+            "Traffic_Level": [traffic],
+            "Time_of_Day": [time_of_day],
+            "Vehicle_Type": [vehicle],
+            "Preparation_Time_min": [prep_time],
+            "Courier_Experience_yrs": [experience]
+        })
+
+        input_data = pd.get_dummies(input_data)
+        input_data = input_data.reindex(columns=dummy_columns, fill_value=0)
+
+        prediction = model.predict(input_data)
+        predicted_time = round(prediction[0], 2)
+
+        st.session_state["predicted_time"] = predicted_time
+        st.session_state["distance"] = distance
+        st.session_state["prep_time"] = prep_time
+
+        st.markdown(
+            f"""
+            <div class="card">
+                <div class="kpi-value">{predicted_time}</div>
+                <div class="kpi-label">Estimated Delivery Time (Minutes)</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+# ============================================================
+# TAB 2 - ANALYTICS (UNCHANGED)
+# ============================================================
+with tab2:
+
+    if "predicted_time" in st.session_state:
+
+        st.markdown("### 📊 Distance vs Delivery Time Simulation")
+
+        distances = np.linspace(1, 20, 20)
+        simulated_times = []
+
+        for d in distances:
+            simulated_times.append(
+                st.session_state["predicted_time"] * (d / st.session_state["distance"])
+            )
+
+        fig = px.line(
+            x=distances,
+            y=simulated_times,
+            labels={"x":"Distance (km)","y":"Estimated Time (min)"},
+            title="Impact of Distance on Delivery Time"
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown("### 📈 Preparation Time Impact")
+
+        prep_range = np.linspace(5, 40, 10)
+        prep_effect = st.session_state["predicted_time"] + (
+            prep_range - st.session_state["prep_time"]
+        )
+
+        fig2 = px.line(
+            x=prep_range,
+            y=prep_effect,
+            labels={"x":"Preparation Time (min)","y":"Estimated Delivery Time"},
+            title="Preparation Time Sensitivity"
+        )
+        st.plotly_chart(fig2, use_container_width=True)
+
+    else:
+        st.info("Run prediction first to see analytics.")
+
+# ============================================================
+# TAB 3 - MODEL INSIGHTS (UNCHANGED)
+# ============================================================
+with tab3:
+
+    st.markdown("### 🧠 Why Linear Regression?")
+
+    st.success("""
+    • Simple and interpretable  
+    • Fast inference  
+    • Suitable for continuous prediction  
+    • Easy integration with One-Hot Encoding  
+    """)
+
+    st.markdown("### 📌 Business Insights")
+
+    st.write("""
+    • Distance and Preparation Time have strongest impact  
+    • Traffic & Weather introduce variance  
+    • Experience reduces delay risk  
+    • Vehicle type affects speed efficiency  
+    """)
 
 # ------------------------------------------------------------
 # FOOTER
 # ------------------------------------------------------------
-st.markdown('<div class="footer">© 2026 Akshit Gajera | ML Delivery Intelligence System</div>', unsafe_allow_html=True)
+st.markdown("---")
+st.markdown("<div style='text-align:center;color:#64748b;'>© 2026 Akshit Gajera | ML Delivery Intelligence Platform</div>", unsafe_allow_html=True)
