@@ -28,14 +28,14 @@ It combines logistical, operational, and external factors to provide insights in
 
 The dataset includes important attributes such as:
 
-Distance (in km)
-Weather Conditions
-Traffic Level
-Time of Day
-Vehicle Type
-Order Preparation Time
-Courier Experience (in years)
-Delivery Time (target variable)
+    Distance (in km)
+    Weather Conditions
+    Traffic Level
+    Time of Day
+    Vehicle Type
+    Order Preparation Time
+    Courier Experience (in years)
+    Delivery Time (target variable)
 
 These features help in understanding how external conditions and operational factors affect delivery performance.
 
@@ -43,48 +43,53 @@ These features help in understanding how external conditions and operational fac
 
 The primary objective of this dataset is to:
 
-Analyze factors influencing delivery time
-Predict delivery duration using machine learning models
-Optimize delivery operations
-Improve customer satisfaction through faster deliveries
+    Analyze factors influencing delivery time
+    Predict delivery duration using machine learning models
+    Optimize delivery operations
+    Improve customer satisfaction through faster deliveries
+    
 🧠 Analysis Use Cases
 
 This dataset can be used for:
-
-Delivery time prediction
-Logistics optimization
-Traffic and weather impact analysis
-Courier performance evaluation
-Operational efficiency analysis
+    
+    Delivery time prediction
+    Logistics optimization
+    Traffic and weather impact analysis
+    Courier performance evaluation
+    Operational efficiency analysis
 
 
 ## 📌 Project Overview
 This project predicts the delivery time (in minutes) for an order based on multiple factors such as:
-- Distance
-- Weather conditions
-- Traffic level
-- Time of day
-- Vehicle type
-- Preparation time
-- Courier experience
+
+    - Distance
+    - Weather conditions
+    - Traffic level
+    - Time of day
+    - Vehicle type
+    - Preparation time
+    - Courier experience
+    
 The model is built using **Linear Regression** and deployed with an interactive **Streamlit web application**.
 
 ## 🧠 Machine Learning Details
-- Model: Linear Regression
-- Encoding Method: One-Hot Encoding using `pd.get_dummies()`
-- Target Variable: `Delivery_Time_min`
-- Model Serialization: Pickle
-- Feature Alignment: Saved dummy columns to ensure correct prediction
-- Deployment: Streamlit
+
+    - Model: Linear Regression
+    - Encoding Method: One-Hot Encoding using `pd.get_dummies()`
+    - Target Variable: `Delivery_Time_min`
+    - Model Serialization: Pickle
+    - Feature Alignment: Saved dummy columns to ensure correct prediction
+    - Deployment: Streamlit
 
 ## 📊 Features Used for Prediction
-- Distance_km
-- Weather
-- Traffic_Level
-- Time_of_Day
-- Vehicle_Type
-- Preparation_Time_min
-- Courier_Experience_yrs
+
+    - Distance_km
+    - Weather
+    - Traffic_Level
+    - Time_of_Day
+    - Vehicle_Type
+    - Preparation_Time_min
+    - Courier_Experience_yrs
 
 ## 📂 Project Structure
 Delivery-Time-Prediction/
