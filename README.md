@@ -92,12 +92,12 @@ The model is built using **Linear Regression** and deployed with an interactive 
     - Courier_Experience_yrs
 
 ## 📂 Project Structure
-Delivery-Time-Prediction/
-├── app.py
-├── model_dummies.pkl
-├── dummy_columns.pkl
-├── requirements.txt
-└── README.md
+    Delivery-Time-Prediction/
+    ├── app.py
+    ├── model_dummies.pkl
+    ├── dummy_columns.pkl
+    ├── requirements.txt
+    └── README.md
 
 
 
