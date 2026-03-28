@@ -8,6 +8,56 @@ Deployment Link :- https://delivery-time-prediction-model.streamlit.app/
 ![Streamlit](https://img.shields.io/badge/Streamlit-WebApp-red)
 ![Status](https://img.shields.io/badge/Project-Completed-brightgreen)
 
+
+📁 Dataset Overview
+
+This project uses a Food Delivery Times Dataset that contains information about delivery operations, including order details, environmental conditions, and courier-related factors. The dataset is designed to analyze and predict food delivery time based on various influencing parameters.
+
+It combines logistical, operational, and external factors to provide insights into how different conditions impact delivery efficiency.
+
+📊 Dataset Summary
+| Property        | Value                          |
+| --------------- | ------------------------------ |
+| Dataset Type    | Food Delivery / Logistics Data |
+| Data Type       | Structured (Tabular)           |
+| Feature Types   | Numerical + Categorical        |
+| Target Variable | Delivery Time                  |
+| Task Type       | Regression                     |
+
+🔑 Key Features
+
+The dataset includes important attributes such as:
+
+Distance (in km)
+Weather Conditions
+Traffic Level
+Time of Day
+Vehicle Type
+Order Preparation Time
+Courier Experience (in years)
+Delivery Time (target variable)
+
+These features help in understanding how external conditions and operational factors affect delivery performance.
+
+🎯 Objective of the Dataset
+
+The primary objective of this dataset is to:
+
+Analyze factors influencing delivery time
+Predict delivery duration using machine learning models
+Optimize delivery operations
+Improve customer satisfaction through faster deliveries
+🧠 Analysis Use Cases
+
+This dataset can be used for:
+
+Delivery time prediction
+Logistics optimization
+Traffic and weather impact analysis
+Courier performance evaluation
+Operational efficiency analysis
+
+
 ## 📌 Project Overview
 This project predicts the delivery time (in minutes) for an order based on multiple factors such as:
 - Distance
