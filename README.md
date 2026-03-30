@@ -9,6 +9,12 @@ Deployment Link :- https://delivery-time-prediction-model.streamlit.app/
 ![Status](https://img.shields.io/badge/Project-Completed-brightgreen)
 
 
+#UI
+![Output](images/1.png)
+![Output](images/2.png)
+![Output](images/3.png)
+![Output](images/4.png)
+
 📁 Dataset Overview
 
 This project uses a Food Delivery Times Dataset that contains information about delivery operations, including order details, environmental conditions, and courier-related factors. The dataset is designed to analyze and predict food delivery time based on various influencing parameters.
